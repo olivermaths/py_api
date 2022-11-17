@@ -1,0 +1,1 @@
+web gunicorn natalnet.wsgi:application --log-file -
