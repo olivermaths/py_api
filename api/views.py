@@ -14,10 +14,12 @@ def getData(request):
 @api_view(['POST'])
 def getResult(request):
     unhadle_data = request.data
-    data = handle_data(consts.header, unhadle_data)
-    if consts.const_decision_tree == None:
-        consts.const_decision_tree = train_decision_tree()
-    classification = classify(data, consts.const_decision_tree)
-    percent = print_leaf(classification)
-    return Response({"ok": percent})
-
+    try:
+        data = handle_data(consts.header, unhadle_data)
+        if consts.const_decision_tree == None:
+            consts.const_decision_tree = train_decision_tree()
+        classification = classify(data, consts.const_decision_tree)
+        percent = print_leaf(classification)
+        return Response({"ok": percent})
+    except:
+        return Response({"error": "Ocorreu um erro ao analisar os dados", "data": unhadle_data})
